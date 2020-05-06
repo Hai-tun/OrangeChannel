@@ -29,7 +29,7 @@ owner:
   account:
 ```
 
-> 请注意 `account` 是 `Long` 类型, 而不是 `String` 请勿添加 `'` 或者 `"`
+> **请注意 `account` 是 `Long` 类型, 而不是 `String` 请勿添加 `'` 或者 `"`**
 
 填写完成后回到控制台输入 `[t, true]` 同意服务条款, Bot 将会自动启动
 
