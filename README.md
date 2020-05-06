@@ -11,7 +11,7 @@
 - 支持快速回复与快速切换
 
 ## 需要的环境
-> Java 7
+> Java 8
 
 ## 快速开始
 使用 `java -jar OrangeChannel-xxxx.jar` 启动服务
