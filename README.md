@@ -1,6 +1,6 @@
 # OrangeChannel
 
-使用 **Android QQ** 与 **WeChat Web** 为 QQ 微信 实现消息的高性能框架
+使用 **Android QQ** 与 **WeChat Web** 为 QQ 微信 实现消息互通的高性能框架
 
 ---
 
