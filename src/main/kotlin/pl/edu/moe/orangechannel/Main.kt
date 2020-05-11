@@ -14,17 +14,17 @@ import me.xuxiaoxiao.chatapi.wechat.entity.contact.WXUser
 import me.xuxiaoxiao.chatapi.wechat.entity.message.WXImage
 import me.xuxiaoxiao.chatapi.wechat.entity.message.WXMessage
 import me.xuxiaoxiao.chatapi.wechat.entity.message.WXText
-import net.mamoe.konfig.yaml.Yaml
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.alsoLogin
 import net.mamoe.mirai.contact.Friend
 import net.mamoe.mirai.event.subscribeAlways
 import net.mamoe.mirai.join
-import net.mamoe.mirai.message.FriendMessage
+import net.mamoe.mirai.message.FriendMessageEvent
 import net.mamoe.mirai.message.data.*
 import net.mamoe.mirai.message.sendImage
 import net.mamoe.mirai.message.sourceId
 import net.mamoe.mirai.message.uploadImage
+import net.mamoe.yamlkt.Yaml
 import java.io.File
 import java.io.InputStream
 import java.util.*
@@ -177,7 +177,7 @@ suspend fun main() {
     val config = Yaml.default.parse(Config.serializer(), configFile.readText())
     bot = Bot(config.bot.account, config.bot.password).alsoLogin()
     owner = bot.getFriend(config.owner.account)
-    bot.subscribeAlways<FriendMessage> {
+    bot.subscribeAlways<FriendMessageEvent> {
         if (it.sender != owner) return@subscribeAlways
         val content = it.message.contentToString()
         if (content.startsWith("#") || content.startsWith("£"))
@@ -315,7 +315,7 @@ suspend fun main() {
             val quoteReply = it.message.firstIsInstanceOrNull<QuoteReply>()
             if (quoteReply != null)
             {
-                val wxContact = useCache.getIfPresent(quoteReply.id)
+                val wxContact = useCache.getIfPresent(quoteReply.source.id)
                 if (wxContact != null)
                 {
                     if (content == "use")
@@ -351,11 +351,11 @@ fun WeChatClient.sendMessageChain(wxContact: WXContact, messageChain: MessageCha
             {
                 is PlainText ->
                 {
-                    sendText(wxContact, message.stringValue)
+                    sendText(wxContact, message.content)
                 }
-                is OnlineImage ->
+                is Image ->
                 {
-                    val `in` = httpClient.get<InputStream>(message.originUrl)
+                    val `in` = httpClient.get<InputStream>(message.queryUrl())
                     var file = File("${UUID.randomUUID()}-${System.currentTimeMillis()}")
                     val out = file.outputStream()
                     `in`.use {

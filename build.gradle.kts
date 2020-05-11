@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "pl.edu.moe"
-version = "1.1.0"
+version = "1.1.1"
 
 repositories {
     maven { url = uri("https://maven.aliyun.com/repository/public") }
@@ -15,7 +15,6 @@ repositories {
     maven { url = uri("https://maven.aliyun.com/repository/google") }
     maven { url = uri("https://mirrors.huaweicloud.com/respository/maven") }
     maven { url = uri("https://dl.bintray.com/kotlin/kotlin-eap") }
-    maven { url = uri("https://dl.bintray.com/him188moe/konfig") }
     mavenCentral()
     jcenter()
 }
@@ -23,9 +22,9 @@ repositories {
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("me.xuxiaoxiao:chatapi-wechat:1.4.0")
-    implementation("net.mamoe:mirai-core-qqandroid:0.39.3")
+    implementation("net.mamoe:mirai-core-qqandroid:1.0-RC2-1")
     implementation("com.google.guava:guava:29.0-jre")
-    implementation("net.mamoe:konfig-yaml:0.1.1")
+    implementation("net.mamoe.yamlkt:yamlkt:0.2.0")
     testImplementation("junit:junit:4.12")
 }
 
