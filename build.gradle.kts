@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "pl.edu.moe"
-version = "1.1.1"
+version = "1.1.2"
 
 repositories {
     maven { url = uri("https://maven.aliyun.com/repository/public") }
@@ -25,6 +25,7 @@ dependencies {
     implementation("net.mamoe:mirai-core-qqandroid:1.3.1")
     implementation("com.google.guava:guava:29.0-jre")
     implementation("net.mamoe.yamlkt:yamlkt:0.6.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.0.0-RC2")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
 }
 
