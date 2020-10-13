@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("java")
-    kotlin("jvm") version "1.3.72"
-    kotlin("plugin.serialization") version "1.3.72"
-    id("com.github.johnrengelman.shadow") version "5.2.0"
+    kotlin("jvm") version "1.4.10"
+    kotlin("plugin.serialization") version "1.4.10"
+    id("com.github.johnrengelman.shadow") version "6.1.0"
 }
 
 group = "pl.edu.moe"
@@ -22,10 +22,10 @@ repositories {
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("me.xuxiaoxiao:chatapi-wechat:1.4.0")
-    implementation("net.mamoe:mirai-core-qqandroid:1.0-RC2-1")
+    implementation("net.mamoe:mirai-core-qqandroid:1.3.1")
     implementation("com.google.guava:guava:29.0-jre")
-    implementation("net.mamoe.yamlkt:yamlkt:0.2.0")
-    testImplementation("junit:junit:4.12")
+    implementation("net.mamoe.yamlkt:yamlkt:0.6.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
 }
 
 tasks.withType<KotlinCompile> {

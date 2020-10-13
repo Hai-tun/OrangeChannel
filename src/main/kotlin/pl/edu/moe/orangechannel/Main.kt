@@ -7,6 +7,7 @@ import io.ktor.client.request.get
 import io.ktor.util.KtorExperimentalAPI
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
+import kotlinx.serialization.parse
 import me.xuxiaoxiao.chatapi.wechat.WeChatClient
 import me.xuxiaoxiao.chatapi.wechat.entity.contact.WXContact
 import me.xuxiaoxiao.chatapi.wechat.entity.contact.WXGroup
@@ -174,7 +175,7 @@ suspend fun main() {
             println("参数错误, 必须为 [t / true, f / false]")
         }
     }
-    val config = Yaml.default.parse(Config.serializer(), configFile.readText())
+    val config = Yaml.default.decodeFromString(Config.serializer(), configFile.readText())
     bot = Bot(config.bot.account, config.bot.password).alsoLogin()
     owner = bot.getFriend(config.owner.account)
     bot.subscribeAlways<FriendMessageEvent> {
