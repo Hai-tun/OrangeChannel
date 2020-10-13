@@ -1,13 +1,12 @@
 package pl.edu.moe.orangechannel
 
 import com.google.common.cache.CacheBuilder
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.request.get
-import io.ktor.util.KtorExperimentalAPI
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.request.*
+import io.ktor.util.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
-import kotlinx.serialization.parse
 import me.xuxiaoxiao.chatapi.wechat.WeChatClient
 import me.xuxiaoxiao.chatapi.wechat.entity.contact.WXContact
 import me.xuxiaoxiao.chatapi.wechat.entity.contact.WXGroup
@@ -40,11 +39,7 @@ val listener = object : WeChatClient.WeChatListener()
         bot.launch {
             val `in` = httpClient.get<InputStream>(qrCode)
             val file = File("weChatQrCode.jpg")
-            val out = file.outputStream()
-            `in`.use {
-                it.copyTo(out)
-                out.close()
-            }
+            `in`.use { file.outputStream().use { `in`.copyTo(it) } }
             owner.sendImage(file)
             bot.launch {
                 val unit = withTimeoutOrNull(5000)
@@ -151,11 +146,7 @@ suspend fun main() {
     val configFile = File("config.yml")
     if (!configFile.exists())
     {
-        Config::class.java.getResourceAsStream("/config.yml").use { `in` ->
-            val out = configFile.outputStream()
-            `in`.copyTo(out)
-            out.close()
-        }
+        Config::class.java.getResourceAsStream("/config.yml").use { `in` -> configFile.outputStream().use { `in`.copyTo(it) } }
         println("已成功生成配置文件, 请填写后同意服务条款后继续 [true/t, false/f]")
         val scanner = Scanner(System.`in`)
         while (true)
@@ -358,11 +349,7 @@ fun WeChatClient.sendMessageChain(wxContact: WXContact, messageChain: MessageCha
                 {
                     val `in` = httpClient.get<InputStream>(message.queryUrl())
                     var file = File("${UUID.randomUUID()}-${System.currentTimeMillis()}")
-                    val out = file.outputStream()
-                    `in`.use {
-                        `in`.copyTo(out)
-                        out.close()
-                    }
+                    `in`.use { file.outputStream().use { `in`.copyTo(it) } }
 
                     val suffix = fileSuffix(file)
                     if (suffix.isNotBlank())
